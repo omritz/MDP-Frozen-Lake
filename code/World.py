@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -186,4 +187,5 @@ class World:
         else:
             reward = 1
         return p_actions[action][possible_state], state_, reward, done
+
 
