@@ -12,7 +12,7 @@ def action_values(mdp, state, V, gamma, r):
             prob, next_state, reward, done = mdp.step(state, a, i, r)
             # print('Action: %s, i: %s, State: %s, Probability: %s, Next state: %s, Reward: %s, Done: %s'
             #       % (a, i, state, prob, next_state, reward, done))
-            A[a] += prob * (reward + gamma * V[next_state-1])
+            A[a] += prob * (reward + gamma * V[next_state-1])  # = prob*reward +prob*gamma* V[next_state-1]
     return A
 
 
@@ -110,7 +110,7 @@ def plot_transition_matrix(env, action):
     for s in range(env.nStates):
         for a in range(env.nActions):
             prob, next_state, reward, done = env.step(s, action, a, 1)
-            transition_matrix[s][next_state - 1] = prob
+            transition_matrix[s][next_state - 1] += prob
     # print(transition_matrix)
     data = transition_matrix
     row_labels = [i + 1 for i in range(16)]
@@ -126,14 +126,14 @@ def plot_transition_matrix(env, action):
 if __name__ == "__main__":
     exercises = [(1, -0.04), (0.9, -0.04), (1, -0.02)]  # (gamma, reward)
     env = World()
-    for i in range(env.nActions):
-        plot_transition_matrix(env, i)
+    # for i in range(env.nActions):
+    #     plot_transition_matrix(env, i)
     theta = 10**-4
     for gamma, reward in exercises:
         p, v = value_iteration(env, theta, gamma, reward)
         env.plot_value(v)
         env.plot_policy(p)
-    p, v = policy_iteration(env, theta, 0.9, -0.04)
+    # p, v = policy_iteration(env, theta, 0.9, -0.04)
 
 
 
